@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм»
 
 * Студент: [Александр Лапшин](https://up.htmlacademy.ru/javascript-individual/1/user/1511811).
-* Наставник: `Неизвестно`.
+* Наставник: [Евгений Лепёшкин] (https://htmlacademy.ru/profile/spearance).
 
 ---
 
