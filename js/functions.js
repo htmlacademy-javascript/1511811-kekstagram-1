@@ -1,6 +1,6 @@
 //Проверяет является ли строка палиндромом.
 const checkPalindrome = (text) => {
-  const arrTextReverse = text.toLowerCase().split('').reverse().join('').replaceAll(' ', '');
+  const arrTextReverse = [...text.toLowerCase()].reverse().join('').replaceAll(' ', '');
   return text.toLowerCase().replaceAll(' ', '') === arrTextReverse;
 };
 
@@ -16,15 +16,17 @@ checkMaxLengthOfText('проверяемая строка', 20);
 //Функция, которая принимает строку, извлекает содержащиеся в ней цифры от 0 до 9
 // и возвращает их в виде целого положительного числа.
 const getNumberFromString = (text) => {
-  const number = Number(text.replace(/\D/g,''));
-  if (number === 0) {
+  const str = text.replace(/\D/g,'');
+  if (str === '') {
     return NaN;
-  } else if (Number.isInteger(number)) {
+  }
+  const number = Number(str);
+  if (Number.isInteger(number)) {
     return number;
   }
 };
 
-getNumberFromString('1 кефир, 0.5 батона');
+getNumberFromString('а я томат 007');
 
 
 // Функция, которая принимает три параметра: исходную строку, минимальную длину и строку
