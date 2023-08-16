@@ -6,7 +6,6 @@ const checkPalindrome = (text) => {
 
 checkPalindrome('Лёша на полке клопа нашёл ');
 
-
 //Функция для проверки длины строки.
 const checkMaxLengthOfText = (text, numberOfLength) => text.length <= numberOfLength;
 
@@ -27,7 +26,6 @@ const getNumberFromString = (text) => {
 };
 
 getNumberFromString('а я томат 007');
-
 
 // Функция, которая принимает три параметра: исходную строку, минимальную длину и строку
 // с добавочными символами — и возвращает исходную строку, дополненную указанными символами
