@@ -3,15 +3,15 @@ import {
   getRandomInteger
 } from './util.js';
 
-const AMOUNTOFPOSTS = 25;
-const MINLIKESAMOUNT = 15;
-const MAXLIKESAMOUNT = 200;
-const MINAVATARNUMBER = 1;
-const MAXAVATARNUMBER = 6;
-const MINIDNUMBERCOMMENTUSER = 1;
-const MAXIDNUMBERCOMMENTUSER = 50;
-const MINCOMMENTUSERAMOUNT = 0;
-const MAXCOMMENTUSERAMOUNT = 15;
+const AMOUNT_OF_POSTS = 25;
+const MIN_LIKES_AMOUNT = 15;
+const MAX_LIKES_AMOUNT = 200;
+const MIN_AVATAR_NUMBER = 1;
+const MAX_AVATAR_NUMBER = 6;
+const MIN_ID_NUMBER_COMMENT_USER = 1;
+const MAX_ID_NUMBER_COMMENT_USER = 50;
+const MIN_COMMENT_USER_AMOUNT = 0;
+const MAX_COMMENT_USER_AMOUNT = 15;
 
 const description = [
   'Лицо человека, вышедшего из матрицы',
@@ -46,20 +46,20 @@ const names = [
 ];
 
 const createCommentUser = () => ({
-  id: getRandomInteger(MINIDNUMBERCOMMENTUSER, MAXIDNUMBERCOMMENTUSER),
-  avatar: `img/avatar-${getRandomInteger(MINAVATARNUMBER, MAXAVATARNUMBER)}.svg`,
+  id: getRandomInteger(MIN_ID_NUMBER_COMMENT_USER, MAX_ID_NUMBER_COMMENT_USER),
+  avatar: `img/avatar-${getRandomInteger(MIN_AVATAR_NUMBER, MAX_AVATAR_NUMBER)}.svg`,
   message: getRandomArrayElement(comment),
   name: getRandomArrayElement(names),
 });
 
-const userComments = Array.from({length: getRandomInteger(MINCOMMENTUSERAMOUNT, MAXCOMMENTUSERAMOUNT)},
+const userComments = Array.from({length: getRandomInteger(MIN_COMMENT_USER_AMOUNT, MAX_COMMENT_USER_AMOUNT)},
   createCommentUser);
 
-const posts = new Array(AMOUNTOFPOSTS).fill(1).map((currentValue, index) => ({
+const posts = new Array(AMOUNT_OF_POSTS).fill(1).map((currentValue, index) => ({
   id: index + 1,
   url: `photos/${index + 1}.jpg`,
   description: getRandomArrayElement(description),
-  likes: getRandomInteger(MINLIKESAMOUNT, MAXLIKESAMOUNT),
+  likes: getRandomInteger(MIN_LIKES_AMOUNT, MAX_LIKES_AMOUNT),
   comments: userComments,
 }));
 
