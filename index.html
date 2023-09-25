@@ -142,7 +142,7 @@
 
         <!-- Просмотр изображения -->
         <div class="big-picture__img">
-          <img src="img/logo-background-3.jpg" alt="Девушка в купальнике" width="600" height="600">
+          <img id="modalphoto" src="img/logo-background-3.jpg" alt="Девушка в купальнике" width="600" height="600">
         </div>
 
         <!-- Информация об изображении. Подпись, комментарии, количество лайков -->
@@ -205,6 +205,18 @@
         <span class="picture__likes"></span>
       </p>
     </a>
+  </template>
+
+  <!-- Шаблон комментатария -->
+  <template id="comment">
+    <li class="social__comment">
+      <img
+        class="social__picture"
+        src="{{аватар}}"
+        alt="{{имя комментатора}}"
+        width="35" height="35">
+      <p class="social__text">{{текст комментария}}</p>
+    </li>
   </template>
 
   <!-- Сообщение с ошибкой загрузки изображения -->
