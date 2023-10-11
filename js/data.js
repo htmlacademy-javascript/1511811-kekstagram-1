@@ -11,7 +11,7 @@ const MAX_AVATAR_NUMBER = 6;
 const MIN_ID_NUMBER_COMMENT_USER = 1;
 const MAX_ID_NUMBER_COMMENT_USER = 50;
 const MIN_COMMENT_USER_AMOUNT = 0;
-const MAX_COMMENT_USER_AMOUNT = 15;
+const MAX_COMMENT_USER_AMOUNT = 20;
 
 const description = [
   'Лицо человека, вышедшего из матрицы',

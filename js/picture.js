@@ -42,16 +42,21 @@ const openBigPicture = (pictureElement, post) => {
   });
 };
 
-//отрисовывает входящие данные
-posts.forEach((post) => {
+
+const renderPost = (post) => {
   const pictureElement = pictureUserTemplate.cloneNode(true);
-  pictureElement.querySelector('img').setAttribute('src', post.url);
-  pictureElement.querySelector('img').setAttribute('alt', post.description);
+  pictureElement.querySelector('img').src = post.url;
+  pictureElement.querySelector('img').alt = post.description;
   pictureElement.querySelector('.picture__likes').textContent = post.likes;
   const comments = pictureElement.querySelector('.picture__comments');
   comments.textContent = post.comments.length;
   openBigPicture(pictureElement, post);
   pictureListFragment.appendChild(pictureElement);
+};
+
+//отрисовывает входящие данные
+posts.forEach((post) => {
+  renderPost(post);
 });
 pictures.appendChild(pictureListFragment);
 
@@ -62,3 +67,7 @@ const closeBigPicture = () => {
 };
 
 closeButtonBigPicture.addEventListener('click', closeBigPicture);
+
+export {
+  body
+};
