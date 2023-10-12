@@ -1,6 +1,8 @@
 import { body } from './picture.js';
 import { isEscapeKey } from './util.js';
 
+const HASHTAG_MAX_COUNT = 5;
+const DESCRIPTION_MAX_COUNT = 140;
 const TAG_ERROR_TEXT = 'Неправильно заполнены хэштеги';
 const uploadForm = document.querySelector('.img-upload__form');
 const editImageField = document.querySelector('.img-upload__overlay');
@@ -55,24 +57,20 @@ const onCloseUploadImageForm = () => {
   document.removeEventListener('keydown', onDocumentEsc);
 };
 
-uploadImageField.addEventListener('change', () => {
-  onOpenUploadImageForm();
-});
+uploadImageField.addEventListener('change', onOpenUploadImageForm);
 
-buttonCloseUploadImageField.addEventListener('click', () => {
-  onCloseUploadImageForm();
-});
+buttonCloseUploadImageField.addEventListener('click', onCloseUploadImageForm);
 
 //Валидация
 
 //длина комментария не может составлять больше 140 символов;
-const validateDescription = (value) => value.trim().length <= 140;
+const validateDescription = (value) => value.trim().length <= DESCRIPTION_MAX_COUNT;
 
 //Проверяет количество хэштегов (не более пяти)
 // хэш-теги нечувствительны к регистру: #ХэшТег и #хэштег считаются одним и тем же тегом;
 const validateHashtag = (value) => {
   const hashtags = value.toLowerCase().split(' ');
-  if (hashtags.length > 5) {
+  if (hashtags.length > HASHTAG_MAX_COUNT) {
     return false;
   }
 
