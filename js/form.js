@@ -1,7 +1,7 @@
 import { body } from './picture.js';
 import { resetScale } from './scale.js';
 import { isEscapeKey } from './util.js';
-import { effectSlider } from './effect.js';
+import { resetEffects } from './effect.js';
 
 const HASHTAG_MAX_COUNT = 5;
 const DESCRIPTION_MAX_COUNT = 140;
@@ -12,7 +12,7 @@ const uploadImageField = document.querySelector('.img-upload__input');
 const buttonCloseUploadImageField = document.querySelector('.img-upload__cancel');
 const hashtagField = document.querySelector('.text__hashtags');
 const descriptionField = document.querySelector('.text__description');
-const photoPreview = document.querySelector('.img-upload__preview-file');
+const photoPreview = document.querySelector('.img-upload__preview img');
 
 
 const pristine = new Pristine(uploadForm, {
@@ -32,7 +32,6 @@ const onDocumentEsc = (evt) => {
     editImageField.classList.add('hidden');
     body.classList.remove('modal-open');
     uploadForm.reset();
-    effectSlider.noUiSlider.reset();
     pristine.reset();
     resetScale();
     document.removeEventListener('keydown', onDocumentEsc);
@@ -41,9 +40,9 @@ const onDocumentEsc = (evt) => {
 
 const resetForm = () => {
   uploadForm.reset();
-  effectSlider.noUiSlider.reset();
   pristine.reset();
   resetScale();
+  resetEffects();
 };
 
 //открытие формы редактирования изображения

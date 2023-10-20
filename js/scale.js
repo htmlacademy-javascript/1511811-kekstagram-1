@@ -10,9 +10,8 @@ const scaleInputElement = modalElement.querySelector('.scale__control--value');
 const smallerButtonElement = modalElement.querySelector ('.scale__control--smaller');
 const biggerButtonElement = modalElement.querySelector('.scale__control--bigger');
 
-const scaleImage = (value) => {
-  photoPreview.setAttribute('scale', `${value}%`);
-  photoPreview.style.transform = `scale(${value / DEFAULT_SCALE})`;
+const scaleImage = (value = DEFAULT_SCALE) => {
+  photoPreview.style.transform = `scale(${value / 100})`;
   scaleInputElement.value = `${value}%`;
 };
 
