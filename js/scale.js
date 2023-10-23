@@ -15,30 +15,24 @@ const scaleImage = (value = DEFAULT_SCALE) => {
   scaleInputElement.value = `${value}%`;
 };
 
-//уменьшает масштаб
-const onSmallerButtonClick = () => {
-  const currentValue = parseInt(scaleInputElement.value, 10);
-  const newValue = currentValue - SCALE_STEP;
-  if (newValue < MIN_SCALE) {
-    scaleImage(MIN_SCALE);
-  } else {
-    scaleImage(newValue);
+const getNewScaleValue = (button, currentValue) => {
+  switch (button) {
+    case biggerButtonElement:
+      return Math.min(MAX_SCALE, currentValue + SCALE_STEP);
+    case smallerButtonElement:
+      return Math.max(MIN_SCALE, currentValue - SCALE_STEP);
   }
 };
 
-//увеличивает масштаб
-const onBiggerButtonClick = () => {
-  const currentValue = parseInt(scaleInputElement.value, 10);
-  const newValue = currentValue + SCALE_STEP;
-  if (newValue > MAX_SCALE) {
-    scaleImage(MAX_SCALE);
-  }else{
-    scaleImage(newValue);
-  }
+const onScalingButtonClick = (evt) => {
+  const scaleValue = parseInt(scaleInputElement.value, 10);
+  const newScaleValue = getNewScaleValue(evt.target, scaleValue);
+  scaleInputElement.value = `${newScaleValue}%`;
+  photoPreview.style.transform = `scale(${newScaleValue / 100})`;
 };
 
-smallerButtonElement.addEventListener('click', onSmallerButtonClick);
-biggerButtonElement.addEventListener('click', onBiggerButtonClick);
+smallerButtonElement.addEventListener('click', onScalingButtonClick);
+biggerButtonElement.addEventListener('click', onScalingButtonClick);
 
 const resetScale = () => scaleImage(DEFAULT_SCALE);
 
