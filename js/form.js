@@ -1,5 +1,7 @@
 import { body } from './picture.js';
+import { resetScale } from './scale.js';
 import { isEscapeKey } from './util.js';
+import { resetEffects } from './effect.js';
 
 const HASHTAG_MAX_COUNT = 5;
 const DESCRIPTION_MAX_COUNT = 140;
@@ -8,9 +10,10 @@ const uploadForm = document.querySelector('.img-upload__form');
 const editImageField = document.querySelector('.img-upload__overlay');
 const uploadImageField = document.querySelector('.img-upload__input');
 const buttonCloseUploadImageField = document.querySelector('.img-upload__cancel');
-const uploadFile = document.querySelector('#upload-file');
 const hashtagField = document.querySelector('.text__hashtags');
 const descriptionField = document.querySelector('.text__description');
+const photoPreview = document.querySelector('.img-upload__preview img');
+
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -23,21 +26,23 @@ uploadForm.addEventListener('submit', (e) => {
   pristine.validate();
 });
 
-//Сбрасывает значение поля выбора файла
-const resetUploadFile = () => {
-  uploadFile.reset();
-};
-
 const onDocumentEsc = (evt) => {
   if (isEscapeKey) {
     evt.preventDefault();
     editImageField.classList.add('hidden');
     body.classList.remove('modal-open');
-    resetUploadFile();
     uploadForm.reset();
     pristine.reset();
+    resetScale();
     document.removeEventListener('keydown', onDocumentEsc);
   }
+};
+
+const resetForm = () => {
+  uploadForm.reset();
+  pristine.reset();
+  resetScale();
+  resetEffects();
 };
 
 //открытие формы редактирования изображения
@@ -49,11 +54,9 @@ const onOpenUploadImageForm = () => {
 
 //закрытие формы редактирования изображения
 const onCloseUploadImageForm = () => {
+  resetForm();
   editImageField.classList.add('hidden');
   body.classList.remove('modal-open');
-  resetUploadFile();
-  uploadForm.reset();
-  pristine.reset();
   document.removeEventListener('keydown', onDocumentEsc);
 };
 
@@ -107,3 +110,5 @@ descriptionField.addEventListener('keydown', (evt) => onStopPropagation(evt));
 
 pristine.addValidator(descriptionField, validateDescription);
 pristine.addValidator(hashtagField, validateHashtag, TAG_ERROR_TEXT);
+
+export {photoPreview};
