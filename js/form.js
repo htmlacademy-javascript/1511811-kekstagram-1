@@ -2,6 +2,7 @@ import { body } from './picture.js';
 import { resetScale } from './scale.js';
 import { isEscapeKey } from './util.js';
 import { resetEffects } from './effect.js';
+import { sendData } from './api.js';
 
 const HASHTAG_MAX_COUNT = 5;
 const DESCRIPTION_MAX_COUNT = 140;
@@ -13,7 +14,9 @@ const buttonCloseUploadImageField = document.querySelector('.img-upload__cancel'
 const hashtagField = document.querySelector('.text__hashtags');
 const descriptionField = document.querySelector('.text__description');
 const photoPreview = document.querySelector('.img-upload__preview img');
-
+const formSubmitButton = document.querySelector('#upload-submit');
+const successUploadImage = document.querySelector('#success').content.querySelector('.success');
+const errorUploadImage = document.querySelector('#error').content.querySelector('.error');
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -38,11 +41,23 @@ const onDocumentEsc = (evt) => {
   }
 };
 
+const blockSubmitButton = () => {
+  formSubmitButton.textContent = 'Отправляется';
+  formSubmitButton.disabled = true;
+};
+
+const resetBlockSubmitButton = () => {
+  formSubmitButton.textContent = 'Опубликовать';
+  formSubmitButton.disabled = false;
+};
+
+
 const resetForm = () => {
   uploadForm.reset();
   pristine.reset();
   resetScale();
   resetEffects();
+  resetBlockSubmitButton();
 };
 
 //открытие формы редактирования изображения
@@ -110,5 +125,63 @@ descriptionField.addEventListener('keydown', (evt) => onStopPropagation(evt));
 
 pristine.addValidator(descriptionField, validateDescription);
 pristine.addValidator(hashtagField, validateHashtag, TAG_ERROR_TEXT);
+
+const errorPopup = errorUploadImage.cloneNode(true);
+const successPopup = successUploadImage.cloneNode(true);
+
+const onUploadImagePopupEsc = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    errorPopup.remove();
+  }
+};
+
+//убирает окно с успешной загрузкой
+const removeSuccessPopup = () => {
+  uploadForm.reset();
+  successPopup.remove();
+  editImageField.classList.add('hidden');
+  document.removeEventListener('keydown', onUploadImagePopupEsc);
+};
+
+//открывает окно с успешной загрузкой
+const openSuccessPopup = () => {
+  const successButton = successPopup.querySelector('.success__button');
+  body.append(successPopup);
+  successButton.addEventListener('click', removeSuccessPopup);
+};
+
+//убирает окно с ошибкой загрузки
+const exitErrorPopup = () => {
+  errorPopup.remove();
+  document.removeEventListener('keydown', onUploadImagePopupEsc);
+};
+
+//открывает окно с ошибкой загрузки
+const openErrorPopup = () => {
+  const errorButton = errorPopup.querySelector('.error__button');
+  body.append(errorPopup);
+  errorButton.addEventListener('click', exitErrorPopup);
+};
+
+//проверка загруженной для редактирования формы
+uploadForm.addEventListener('submit', (evt) =>{
+  evt.preventDefault();
+
+  const isValid = pristine.validate();
+  if (isValid) {
+    const data = new FormData(uploadForm);
+    blockSubmitButton();
+    sendData(data)
+      .then(() => {
+        openSuccessPopup();
+        resetForm();
+      });
+  } else {
+    openErrorPopup();
+    resetBlockSubmitButton();
+  }
+});
+
 
 export {photoPreview};

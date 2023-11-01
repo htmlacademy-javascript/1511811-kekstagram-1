@@ -1,10 +1,11 @@
-import { posts } from './data.js';
+// import { posts } from './data.js';
 import { isEscapeKey } from './util.js';
 import {
   resetCommentShown,
   setComments,
   onCommentsLoaderClick
 } from './comments.js';
+// import { posts } from './data.js';
 
 const pictures = document.querySelector('.pictures');
 const pictureUserTemplate = document.querySelector('#picture')
@@ -42,23 +43,26 @@ const openBigPicture = (pictureElement, post) => {
   });
 };
 
-
-const renderPost = (post) => {
-  const pictureElement = pictureUserTemplate.cloneNode(true);
-  pictureElement.querySelector('img').src = post.url;
-  pictureElement.querySelector('img').alt = post.description;
-  pictureElement.querySelector('.picture__likes').textContent = post.likes;
-  const comments = pictureElement.querySelector('.picture__comments');
-  comments.textContent = post.comments.length;
-  openBigPicture(pictureElement, post);
-  pictureListFragment.appendChild(pictureElement);
+const removeAllPosts = () => {
+  const renderedPosts = pictures.querySelectorAll('.picture');
+  renderedPosts.forEach((renderedPost) => {
+    pictures.removeChild(renderedPost);
+  });
 };
 
-//отрисовывает входящие данные
-posts.forEach((post) => {
-  renderPost(post);
-});
-pictures.appendChild(pictureListFragment);
+const renderPost = (posts) => {
+  removeAllPosts();
+  posts.forEach((post) => {
+    const pictureElement = pictureUserTemplate.cloneNode(true);
+    pictureElement.querySelector('img').src = post.url;
+    pictureElement.querySelector('img').alt = post.description;
+    pictureElement.querySelector('.picture__likes').textContent = post.likes;
+    pictureElement.querySelector('.picture__comments').textContent = post.comments.length;
+    openBigPicture(pictureElement, post);
+    pictureListFragment.appendChild(pictureElement);
+  });
+  pictures.appendChild(pictureListFragment);
+};
 
 const closeBigPicture = () => {
   bigPicture.classList.add('hidden');
@@ -69,5 +73,8 @@ const closeBigPicture = () => {
 closeButtonBigPicture.addEventListener('click', closeBigPicture);
 
 export {
-  body
+  body,
+  renderPost,
+  pictures,
+  pictureListFragment,
 };
