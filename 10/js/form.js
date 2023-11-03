@@ -97,6 +97,12 @@ const validateHashtag = (value) => {
   if (uniqueHashtag.size !== hashtags.length) {
     return false;
   }
+
+  //хэштег необязателен
+  if (value === '') {
+    return true;
+  }
+
   // хэш-тег начинается с символа # (решётка);
   // хеш-тег не может состоять только из одной решётки;
   //строка после решётки должна состоять из букв и чисел и не может
@@ -182,6 +188,5 @@ uploadForm.addEventListener('submit', (evt) =>{
     resetBlockSubmitButton();
   }
 });
-
 
 export {photoPreview};
