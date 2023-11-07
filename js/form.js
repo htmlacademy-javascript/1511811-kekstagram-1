@@ -4,6 +4,8 @@ import { isEscapeKey } from './util.js';
 import { resetEffects } from './effect.js';
 import { sendData } from './api.js';
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 const HASHTAG_MAX_COUNT = 5;
 const DESCRIPTION_MAX_COUNT = 140;
 const TAG_ERROR_TEXT = 'Неправильно заполнены хэштеги';
@@ -17,6 +19,7 @@ const photoPreview = document.querySelector('.img-upload__preview img');
 const formSubmitButton = document.querySelector('#upload-submit');
 const successUploadImage = document.querySelector('#success').content.querySelector('.success');
 const errorUploadImage = document.querySelector('#error').content.querySelector('.error');
+const effectsPreviews = document.querySelectorAll('.effects__preview');
 
 const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
@@ -29,18 +32,6 @@ uploadForm.addEventListener('submit', (e) => {
   pristine.validate();
 });
 
-const onDocumentEsc = (evt) => {
-  if (isEscapeKey) {
-    evt.preventDefault();
-    editImageField.classList.add('hidden');
-    body.classList.remove('modal-open');
-    uploadForm.reset();
-    pristine.reset();
-    resetScale();
-    document.removeEventListener('keydown', onDocumentEsc);
-  }
-};
-
 const blockSubmitButton = () => {
   formSubmitButton.textContent = 'Отправляется';
   formSubmitButton.disabled = true;
@@ -51,6 +42,19 @@ const resetBlockSubmitButton = () => {
   formSubmitButton.disabled = false;
 };
 
+const onDocumentEsc = (evt) => {
+  if (isEscapeKey) {
+    evt.preventDefault();
+    editImageField.classList.add('hidden');
+    body.classList.remove('modal-open');
+    uploadForm.reset();
+    pristine.reset();
+    resetScale();
+    resetEffects();
+    resetBlockSubmitButton();
+    document.removeEventListener('keydown', onDocumentEsc);
+  }
+};
 
 const resetForm = () => {
   uploadForm.reset();
@@ -188,5 +192,21 @@ uploadForm.addEventListener('submit', (evt) =>{
     resetBlockSubmitButton();
   }
 });
+
+//загружает фотографию выбранную пользователем
+uploadImageField.addEventListener('change', () => {
+  const file = uploadImageField.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+  if (matches) {
+    photoPreview.src = URL.createObjectURL(file);
+    effectsPreviews.forEach((preview) => {
+      preview.style.backgroundImage = `url('${photoPreview.src}')`;
+    });
+  }
+});
+
 
 export {photoPreview};
