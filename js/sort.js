@@ -48,8 +48,7 @@ const handleFilterClick = (evt) => {
 
 const debauncedHandleFilterClick = debounce(handleFilterClick);
 
-//ставит обработчик на элемент фильтра/сортировки
-filterElement.addEventListener('click', debauncedHandleFilterClick);//убеждаемся что клик произошел по кнопке фильтра/сортиро
+filterElement.addEventListener('click', debauncedHandleFilterClick);
 
 const initFilter = (posts) => {
   filterElement.classList.remove('img-filters--inactive');

@@ -2,9 +2,8 @@ const COMMENTS_STEP = 5;
 
 let commentsShown = 0;
 let comments = [];
-//куда вставлять комментарии
+
 const commContainer = document.querySelector('.social__comments');
-//доступ к шаблону списка комментариев
 const commTemplate = document.querySelector('#comment').content.querySelector('.social__comment');
 const commentsCount = document.querySelector('.social__comment-count');
 const commentsLoader = document.querySelector('.comments-loader');
@@ -20,11 +19,11 @@ const renderComment = (comment, listFragment) => {
 
 const renderComments = () => {
   const listFragment = document.createDocumentFragment();
-  comments.slice(0, commentsShown).forEach((comment) => { //проходим по массиву с комментариями и рендерим комменты
+  comments.slice(0, commentsShown).forEach((comment) => {
     renderComment(comment, listFragment);
   });
-  commContainer.replaceChildren(); //обнуляем комменты
-  commContainer.appendChild(listFragment); //в контейнер ставим фрагмент с комментами
+  commContainer.replaceChildren();
+  commContainer.appendChild(listFragment);
 };
 
 const hideShowMoreButton = () => {

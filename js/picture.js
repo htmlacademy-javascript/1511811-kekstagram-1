@@ -1,11 +1,9 @@
-// import { posts } from './data.js';
 import { isEscapeKey } from './util.js';
 import {
   resetCommentShown,
   setComments,
   onCommentsLoaderClick
 } from './comments.js';
-// import { posts } from './data.js';
 
 const pictures = document.querySelector('.pictures');
 const pictureUserTemplate = document.querySelector('#picture')
@@ -13,9 +11,9 @@ const pictureUserTemplate = document.querySelector('#picture')
 const bigPicture = document.querySelector('.big-picture');
 const modalPhoto = bigPicture.querySelector('#modalphoto');
 const body = document.querySelector('body');
-const likesCount = document.querySelector('.likes-count');
-const commentsCount = document.querySelector('.social__comment-count');
-const photoDescription = document.querySelector('.social__caption');
+const likesCount = bigPicture.querySelector('.likes-count');
+const commentsCount = bigPicture.querySelector('.social__comment-count');
+const photoDescription = bigPicture.querySelector('.social__caption');
 const closeButtonBigPicture = bigPicture.querySelector('.big-picture__cancel');
 
 const pictureListFragment = document.createDocumentFragment();

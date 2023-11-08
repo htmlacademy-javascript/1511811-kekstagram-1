@@ -50,12 +50,11 @@ const EFFECTS = [{
 const DEFAULT_EFFECT = EFFECTS[0];
 let chosenEffect = DEFAULT_EFFECT;
 
-const imageElement = document.querySelector('.img-upload__preview img');
-const effectsElement = document.querySelector('.effects');
-const sliderElement = document.querySelector('.effect-level__slider');
-
-const effectLevelElement = document.querySelector('.effect-level__value');
 const formElement = document.querySelector('.img-upload__form');
+const imageElement = formElement.querySelector('.img-upload__preview img');
+const effectsElement = formElement.querySelector('.effects');
+const sliderElement = formElement.querySelector('.effect-level__slider');
+const effectLevelElement = formElement.querySelector('.effect-level__value');
 
 const isDefault = () => chosenEffect === DEFAULT_EFFECT;
 
