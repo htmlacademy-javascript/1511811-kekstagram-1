@@ -15,19 +15,17 @@ const ErrorText = {
 const load = (route, errorText, method = Method.GET, body = null) =>
   fetch(`${BASE_URL}${route}`, {method, body})
     .then((responce) => {
-      if (!responce.ok) { //если ответ от сервера отрицательный то исключаем ошибку в catch
+      if (!responce.ok) {
         throw new Error();
       }
-      return responce.json(); //если ответ положительный, возвращает результат извлечения полученных данных с сервера, а именно объект
+      return responce.json();
     })
     .catch(() => {
       throw new Error(errorText);
     });
 
-//получает данные
 const getData = () => load(Route.GET_DATA, ErrorText.GET_DATA);
 
-//отправляет данные
 const sendData = (body) => load(Route.SEND_DATA, ErrorText.SEND_DATA, Method.POST, body);
 
 export {

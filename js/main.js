@@ -1,5 +1,4 @@
 import './util.js';
-import './functions.js';
 import './picture.js';
 import './comments.js';
 import './form.js';
@@ -12,7 +11,6 @@ import {renderPost} from './picture.js';
 import { showAlert } from './util.js';
 import { initFilter } from './sort.js';
 
-//загружает данные с сервера и обрабатывает
 getData()
   .then((data) => {
     renderPost(data);
