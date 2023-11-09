@@ -9,7 +9,7 @@ const pictures = document.querySelector('.pictures');
 const pictureUserTemplate = document.querySelector('#picture')
   .content.querySelector('.picture');
 const bigPicture = document.querySelector('.big-picture');
-const modalPhoto = bigPicture.querySelector('#modalphoto');
+const modalElementPhoto = bigPicture.querySelector('#modalphoto');
 const body = document.querySelector('body');
 const likesCount = bigPicture.querySelector('.likes-count');
 const commentsCount = bigPicture.querySelector('.social__comment-count');
@@ -28,7 +28,7 @@ const onBigPictureEscKeyDown = (evt) => {
 
 const openBigPicture = (pictureElement, post) => {
   pictureElement.addEventListener('click', () => {
-    modalPhoto.src = post.url;
+    modalElementPhoto.src = post.url;
     likesCount.textContent = post.likes;
     commentsCount.textContent = post.comments.length;
     photoDescription.textContent = post.description;

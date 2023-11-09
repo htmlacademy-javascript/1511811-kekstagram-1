@@ -9,6 +9,7 @@ const SENDING = 'Отправляется';
 const PUBLISH = 'Опубликовать';
 
 const HASHTAG_MAX_COUNT = 5;
+const HASHTAG_MAX_LENGTH = 20;
 const DESCRIPTION_MAX_COUNT = 140;
 const TAG_ERROR_TEXT = 'Неправильно заполнены хэштеги';
 const uploadForm = document.querySelector('.img-upload__form');
@@ -45,7 +46,7 @@ const resetBlockSubmitButton = () => {
 };
 
 const onDocumentEsc = (evt) => {
-  if (isEscapeKey) {
+  if (isEscapeKey(evt)) {
     evt.preventDefault();
     editImageField.classList.add('hidden');
     body.classList.remove('modal-open');
@@ -84,6 +85,7 @@ uploadImageField.addEventListener('change', onOpenUploadImageForm);
 buttonCloseUploadImageField.addEventListener('click', onCloseUploadImageForm);
 
 const validateDescription = (value) => value.trim().length <= DESCRIPTION_MAX_COUNT;
+const checkHashtagLength = (value) => value.split(' ').every((hashtag) => hashtag.length <= HASHTAG_MAX_LENGTH);
 
 const validateHashtag = (value) => {
   const hashtags = value.toLowerCase().split(' ');
@@ -100,7 +102,7 @@ const validateHashtag = (value) => {
     return true;
   }
 
-  const regex = /^#[a-zA-Zа-я0-9]{1,19}$/;
+  const regex = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
   const hasValidCharacters = hashtags.every((hashtagItem) => regex.test(hashtagItem));
   return hasValidCharacters;
 };
@@ -115,7 +117,7 @@ hashtagField.addEventListener('keydown', (evt) => onStopPropagation(evt));
 
 descriptionField.addEventListener('keydown', (evt) => onStopPropagation(evt));
 
-pristine.addValidator(descriptionField, validateDescription);
+pristine.addValidator(descriptionField, validateDescription, checkHashtagLength);
 pristine.addValidator(hashtagField, validateHashtag, TAG_ERROR_TEXT);
 
 const errorPopup = errorUploadImage.cloneNode(true);
